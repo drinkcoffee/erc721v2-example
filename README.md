@@ -1,19 +1,28 @@
-## Foundry
+# Immutable ERC721 V2 example
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This is an example repo showing how to use and extend the Immutable ERC721v2 contract.
 
-Foundry consists of:
+## Command Sequence
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The following is the list of commands used to create this repo.
 
-## Documentation
+- Create repo in github. 
+- Clone the repo.
+- Init Foundry project: 
+  - `forge init --force`
+- Install Immtuable's contracts repo:
+  - `forge install https://github.com/immutable/contracts.git  --no-commit`
+- Install Open Zeppelin's upgradeable contracts repo:
+  - `forge install https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable  --no-commit`
+- Add `./remappings.txt` with contents:
+  - `@imtbl/contracts/contracts/=lib/contracts/contracts/`
+- Update `./.gitignore` to ignore Apple file:
+  - `.DS_Store`
+- Remove `Counter` example contract, tests, and script from the src, test, and script directories.
+- 
 
-https://book.getfoundry.sh/
 
-## Usage
+
 
 ### Build
 
@@ -21,41 +30,17 @@ https://book.getfoundry.sh/
 $ forge build
 ```
 
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
 ### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
+Not that `script/deploy.sh` needs small modifications to switch between mainnet and testnet. It also has instructions if deploying using a Ledger hardware wallet.
 
 ```shell
-$ cast <subcommand>
+$ export PKEY=<your key>
+$ export APIKEY=<your blockscout test net or mainnet API key>
+$ sh script/deploy.sh
 ```
+
+
 
 ### Help
 
@@ -64,3 +49,4 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
