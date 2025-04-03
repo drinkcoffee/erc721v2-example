@@ -21,8 +21,42 @@ The following is the list of commands used to create this repo.
 @imtbl/=lib/contracts/
 openzeppelin-contracts-upgradeable-4.9.3/=lib/openzeppelin-contracts-upgradeable-4.9.3/contracts/
 ```
-- Update `./.gitignore` to ignore Apple file:
-  - `.DS_Store`
+- Update `./.gitignore` to ignore Apple file and to igore the `broadcast` directory. Go from:
+```
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+```
+to:
+```
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+
+.DS_Store
+```
 - Remove `Counter` example contract, tests, and script from the src, test, and script directories.
 - Add SampleCollectionERC721 contract, tests, and script to the src, test, and script directories.
 
