@@ -14,12 +14,17 @@ The following is the list of commands used to create this repo.
   - `forge install https://github.com/immutable/contracts.git  --no-commit`
 - Install Open Zeppelin's upgradeable contracts repo:
   - `forge install https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable  --no-commit`
+- Install Open Zeppelin's upgradeable contracts repo for version 4.9.3:
+  - `forge install openzeppelin-contracts-upgradeable-4.9.3=https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable@v4.9.3  --no-commit`
 - Add `./remappings.txt` with contents:
-  - `@imtbl/contracts/contracts/=lib/contracts/contracts/`
+```
+@imtbl/=lib/contracts/
+openzeppelin-contracts-upgradeable-4.9.3/=lib/openzeppelin-contracts-upgradeable-4.9.3/contracts/
+```
 - Update `./.gitignore` to ignore Apple file:
   - `.DS_Store`
 - Remove `Counter` example contract, tests, and script from the src, test, and script directories.
-- 
+- Add SampleCollectionERC721 contract, tests, and script to the src, test, and script directories.
 
 
 

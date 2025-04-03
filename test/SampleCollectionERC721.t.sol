@@ -5,14 +5,11 @@ pragma solidity >=0.8.19 <0.8.29;
 // solhint-disable-next-line no-global-import
 import "forge-std/Test.sol";
 import {SampleCollectionERC721} from "../src/SampleCollectionERC721.sol";
-import {OperatorAllowlistUpgradeable} from "@imtbl/contracts/contracts/allowlist/OperatorAllowlistUpgradeable.sol";
-import {DeployOperatorAllowlist} from "@imtbl/contracts/test/utils/DeployAllowlistProxy.sol";
+import {OperatorAllowlistUpgradeable} from "@imtbl/contracts/allowlist/OperatorAllowlistUpgradeable.sol";
+import {DeployOperatorAllowlist} from "@imtbl/test/utils/DeployAllowlistProxy.sol";
 
 
-/**
- * Base contract for all ERC 721 tests.
- */
-abstract contract ERC721BaseTest is Test {
+contract SampleCollectionERC721Test is Test {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
     string public constant BASE_URI = "https://drinkcoffee.github.io/projects/nfts";
@@ -26,6 +23,7 @@ abstract contract ERC721BaseTest is Test {
     OperatorAllowlistUpgradeable public allowlist;
 
     address public owner;
+    address public minter;
     address public feeReceiver;
     address public operatorAllowListAdmin;
     address public operatorAllowListUpgrader;
@@ -45,6 +43,7 @@ abstract contract ERC721BaseTest is Test {
 
     function setUp() public virtual {
         owner = makeAddr("hubOwner");
+        minter = makeAddr("minter");
         feeReceiver = makeAddr("feeReceiver");
         operatorAllowListAdmin = makeAddr("operatorAllowListAdmin");
         operatorAllowListUpgrader = makeAddr("operatorAllowListUpgrader");
@@ -64,21 +63,16 @@ abstract contract ERC721BaseTest is Test {
         user2 = makeAddr("user2");
         user3 = makeAddr("user3");
 
-        erc721 = new ImmutableERC721MintByID(
-            owner, name, symbol, baseURI, contractURI, address(allowlist), feeReceiver, feeNumerator
+        erc721 = new SampleCollectionERC721(
+            owner, minter, name, symbol, baseURI, contractURI, address(allowlist), feeReceiver, feeNumerator
         );
     }
 
-    function testAccessControl() public {
+    function testAccessControl() public view {
         address[] memory admins = erc721.getAdmins();
-        assertEq(admins[0], owner);
-
-        // Test granting and revoking minter role
-        bytes32 minterRole = erc721.MINTER_ROLE();
-        assertFalse(erc721.hasRole(minterRole, user1));
-
-        vm.prank(owner);
-        assertTrue(erc721.hasRole(minterRole, owner));
+        assertEq(admins[0], owner, "Owner is admins[0]");
+        assertTrue(erc721.hasRole(erc721.DEFAULT_ADMIN_ROLE(), owner), "Owner has default admin");
+        assertTrue(erc721.hasRole(erc721.MINTER_ROLE(), minter), "Minter has minting role");
     }
 
     function testMint() public {
@@ -90,7 +84,7 @@ abstract contract ERC721BaseTest is Test {
 
         uint256 qty = 5;
 
-        uint256 first = erc721BQ.mintBatchByQuantityNextTokenId();
+        uint256 first = erc721.mintBatchByQuantityNextTokenId();
         uint256 originalBalance = erc721.balanceOf(user1);
         uint256 originalSupply = erc721.totalSupply();
 
@@ -101,7 +95,7 @@ abstract contract ERC721BaseTest is Test {
         emit Transfer(address(0), user1, first+2);
         emit Transfer(address(0), user1, first+3);
         emit Transfer(address(0), user1, first+4);
-        erc721BQ.mintByQuantity(user1, qty);
+        erc721.mintByQuantity(user1, qty);
 
         assertEq(erc721.balanceOf(user1), originalBalance + qty);
         assertEq(erc721.totalSupply(), originalSupply + qty);
