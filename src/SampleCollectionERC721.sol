@@ -5,7 +5,6 @@ pragma solidity >=0.8.19 <0.8.29;
 import {MintingAccessControl} from "@imtbl/contracts/access/MintingAccessControl.sol";
 import {ImmutableERC721V2} from "@imtbl/contracts/token/erc721/preset/ImmutableERC721V2.sol";
 
-
 contract SampleCollectionERC721 is ImmutableERC721V2 {
     /**
      * @notice Grants `DEFAULT_ADMIN_ROLE` to the supplied `owner` address
@@ -20,9 +19,17 @@ contract SampleCollectionERC721 is ImmutableERC721V2 {
      * @param _feeNumerator The royalty fee numerator
      * @dev the royalty receiver and amount (this can not be changed once set)
      */
-    constructor(address _owner, address _minter, string memory _name, string memory _symbol,
-        string memory _baseURI, string memory _contractURI, address _operatorAllowlist, 
-        address _royaltyReceiver, uint96 _feeNumerator)
+    constructor(
+        address _owner,
+        address _minter,
+        string memory _name,
+        string memory _symbol,
+        string memory _baseURI,
+        string memory _contractURI,
+        address _operatorAllowlist,
+        address _royaltyReceiver,
+        uint96 _feeNumerator
+    )
         ImmutableERC721V2(
             _owner,
             _name,
@@ -32,7 +39,8 @@ contract SampleCollectionERC721 is ImmutableERC721V2 {
             _operatorAllowlist,
             _royaltyReceiver,
             _feeNumerator
-        ) {
-            _grantRole(MintingAccessControl.MINTER_ROLE, _minter);
-        }
+        )
+    {
+        _grantRole(MintingAccessControl.MINTER_ROLE, _minter);
+    }
 }

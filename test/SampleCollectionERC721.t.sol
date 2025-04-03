@@ -8,7 +8,6 @@ import {SampleCollectionERC721} from "../src/SampleCollectionERC721.sol";
 import {OperatorAllowlistUpgradeable} from "@imtbl/contracts/allowlist/OperatorAllowlistUpgradeable.sol";
 import {DeployOperatorAllowlist} from "@imtbl/test/utils/DeployAllowlistProxy.sol";
 
-
 contract SampleCollectionERC721Test is Test {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
@@ -16,7 +15,6 @@ contract SampleCollectionERC721Test is Test {
     string public constant CONTRACT_URI = "https://drinkcoffee.github.io/projects/nfts/sample-collection.json";
     string public constant NAME = "ERC721 Sample Collection";
     string public constant SYMBOL = "SC7";
-
 
     SampleCollectionERC721 public erc721;
 
@@ -40,7 +38,6 @@ contract SampleCollectionERC721Test is Test {
     address public user3;
     uint256 public user1Pkey;
 
-
     function setUp() public virtual {
         owner = makeAddr("hubOwner");
         minter = makeAddr("minter");
@@ -52,11 +49,12 @@ contract SampleCollectionERC721Test is Test {
         name = NAME;
         symbol = SYMBOL;
         baseURI = BASE_URI;
-        contractURI = CONTRACT_URI;   
-        feeNumerator = 200; // 2%     
+        contractURI = CONTRACT_URI;
+        feeNumerator = 200; // 2%
 
         DeployOperatorAllowlist deployScript = new DeployOperatorAllowlist();
-        address proxyAddr = deployScript.run(operatorAllowListAdmin, operatorAllowListUpgrader, operatorAllowListRegistrar);
+        address proxyAddr =
+            deployScript.run(operatorAllowListAdmin, operatorAllowListUpgrader, operatorAllowListRegistrar);
         allowlist = OperatorAllowlistUpgradeable(proxyAddr);
 
         (user1, user1Pkey) = makeAddrAndKey("user1");
@@ -91,10 +89,10 @@ contract SampleCollectionERC721Test is Test {
         vm.prank(minter);
         vm.expectEmit(true, true, false, false);
         emit Transfer(address(0), user1, first);
-        emit Transfer(address(0), user1, first+1);
-        emit Transfer(address(0), user1, first+2);
-        emit Transfer(address(0), user1, first+3);
-        emit Transfer(address(0), user1, first+4);
+        emit Transfer(address(0), user1, first + 1);
+        emit Transfer(address(0), user1, first + 2);
+        emit Transfer(address(0), user1, first + 3);
+        emit Transfer(address(0), user1, first + 4);
         erc721.mintByQuantity(user1, qty);
 
         assertEq(erc721.balanceOf(user1), originalBalance + qty);

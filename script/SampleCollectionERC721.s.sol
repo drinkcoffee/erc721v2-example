@@ -21,26 +21,15 @@ contract SampleCollectionERC721Script is Script {
 
         address operatorAllolist = _deployToMainnet ? MAINNET_OPERATOR_ALLOWLIST : TESTNET_OPERATOR_ALLOWLIST;
 
-        
-
         address owner = 0xE0069DDcAd199C781D54C0fc3269c94cE90364E2;
         address minter = owner;
         address royaltyReceiver = owner;
 
         vm.broadcast();
         token = new SampleCollectionERC721(
-            owner,
-            minter,
-            name,
-            symbol,
-            baseURI,
-            contractURI,
-            operatorAllolist, 
-            royaltyReceiver,
-            feeNumerator
+            owner, minter, name, symbol, baseURI, contractURI, operatorAllolist, royaltyReceiver, feeNumerator
         );
 
         console.log("Deployed to: %x", address(token));
-
     }
 }
