@@ -102,4 +102,10 @@ contract SampleCollectionERC721Test is Test {
             assertEq(erc721.ownerOf(first + i), user1);
         }
     }
+
+    function testTokenUri() public {
+        vm.prank(minter);
+        erc721.mint(user1, 103);
+        assertEq(erc721.tokenURI(103), "https://drinkcoffee.github.io/projects/nfts/103.json", "Wrong URI");
+    }
 }

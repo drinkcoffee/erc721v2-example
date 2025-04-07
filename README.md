@@ -16,6 +16,10 @@ The following is the list of commands used to create this repo.
   - `forge install https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable  --no-commit`
 - Install Open Zeppelin's upgradeable contracts repo for version 4.9.3:
   - `forge install openzeppelin-contracts-upgradeable-4.9.3=https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable@v4.9.3  --no-commit`
+- Install Open Zeppelin's contracts repo for version 4.9.3:
+  - `forge install openzeppelin-contracts-4.9.3=https://github.com/OpenZeppelin/openzeppelin-contracts@v4.9.3  --no-commit`
+
+
 - Add `./remappings.txt` with contents:
 ```
 @imtbl/=lib/contracts/

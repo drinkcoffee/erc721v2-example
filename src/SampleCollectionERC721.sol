@@ -4,8 +4,13 @@ pragma solidity >=0.8.19 <0.8.29;
 
 import {MintingAccessControl} from "@imtbl/contracts/access/MintingAccessControl.sol";
 import {ImmutableERC721V2} from "@imtbl/contracts/token/erc721/preset/ImmutableERC721V2.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {ERC721, IERC721Metadata} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
 
 contract SampleCollectionERC721 is ImmutableERC721V2 {
+    using Strings for uint256;
+
     /**
      * @notice Grants `DEFAULT_ADMIN_ROLE` to the supplied `owner` address
      * @param _owner The address to grant the `DEFAULT_ADMIN_ROLE` to
@@ -43,4 +48,13 @@ contract SampleCollectionERC721 is ImmutableERC721V2 {
     {
         _grantRole(MintingAccessControl.MINTER_ROLE, _minter);
     }
+
+    function tokenURI(uint256 tokenId) public view override(IERC721Metadata, ERC721) returns (string memory) {
+        _requireMinted(tokenId);
+
+        string memory baseURI = _baseURI();
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : "";
+    }
+
+
 }
