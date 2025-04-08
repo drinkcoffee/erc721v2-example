@@ -11,8 +11,8 @@ import {DeployOperatorAllowlist} from "@imtbl/test/utils/DeployAllowlistProxy.so
 contract SampleCollectionERC721Test is Test {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
-    string public constant BASE_URI = "https://drinkcoffee.github.io/projects/nfts/";
-    string public constant CONTRACT_URI = "https://drinkcoffee.github.io/projects/nfts/sample-collection.json";
+    string public constant BASE_URI = "https://drinkcoffee.github.io/projects/erc721nfts/";
+    string public constant CONTRACT_URI = "https://drinkcoffee.github.io/projects/erc721nfts/sample-collection.json";
     string public constant NAME = "ERC721 Sample Collection";
     string public constant SYMBOL = "SC7";
 
@@ -106,6 +106,6 @@ contract SampleCollectionERC721Test is Test {
     function testTokenUri() public {
         vm.prank(minter);
         erc721.mint(user1, 103);
-        assertEq(erc721.tokenURI(103), "https://drinkcoffee.github.io/projects/nfts/103.json", "Wrong URI");
+        assertEq(erc721.tokenURI(103), "https://drinkcoffee.github.io/projects/erc721nfts/103.json", "Wrong URI");
     }
 }

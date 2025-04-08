@@ -13,8 +13,8 @@ contract SampleCollectionERC721Script is Script {
     function setUp() public {}
 
     function deploy(bool _deployToMainnet) public {
-        string memory baseURI = "https://drinkcoffee.github.io/projects/nfts/";
-        string memory contractURI = "https://drinkcoffee.github.io/projects/nfts/sample-collection.json";
+        string memory baseURI = "https://drinkcoffee.github.io/projects/erc721nfts/";
+        string memory contractURI = "https://drinkcoffee.github.io/projects/erc721nfts/sample-collection.json";
         string memory name = "ERC721 Sample Collection";
         string memory symbol = "SC7";
         uint96 feeNumerator = 200; // 2%
